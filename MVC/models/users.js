@@ -2,6 +2,11 @@ const db = require('../../db/knex')
 const bcrypt = require('bcrypt')
 
 
+function getAll(){
+  return db('users')
+}
+
+
 //looks up user in database and gives you back entire colomn back in response
 function getOneByUserName(username){
     return (
@@ -10,6 +15,16 @@ function getOneByUserName(username){
       .first()
     )
   }
+
+  function getOne(id){
+    return (
+      db('users')
+      .where({id})
+      .first()
+    )
+  }
+
+ 
 
 // Create a user
 // 1. Check to see if user already exists
@@ -47,6 +62,8 @@ function createUser(username, password){
 }
 
 module.exports = {
+    getAll,
+    getOne,
     getOneByUserName,
     createUser,
   }

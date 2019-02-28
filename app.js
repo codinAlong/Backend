@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 5000
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').load()
@@ -10,6 +11,7 @@ if(process.env.NODE_ENV !== 'production'){
 
 app.use(bodyParser.json())
 app.use(cors())
+app.use(morgan('dev'))
 
 app.use('/auth', require('./MVC/routes/auth'))
 app.use('/users', require('./MVC/routes/users'))
@@ -18,7 +20,7 @@ app.use('/users', require('./MVC/routes/users'))
 app.use((err,req,res,next)=>{
     console.log(err);
     const status = err.status || 500
-    res.status(404).send({error:err})
+    res.status(err.status).send({error:err})
 })
 
 //default router error

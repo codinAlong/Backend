@@ -1,13 +1,25 @@
 const userModel = require('../models/users')
 
 function getAll(req,res,next){
-    const data = getAll.userModel()
 
-    if(!data){
-        return next({status: 400, message:'Bad username'})
+    getOne.userModel(req.body)
+    .then(function(data){
+        return res.status(200).send({data})
+    })
+    .catch(next())
+}
+
+function getOne(req, res, next){
+
+    if(!req.params.id){
+        return next({ status: 404, message: 'user was not found'})
     }
 
-    res.status(200).send({data})
+    getOne.userModel(req.params.id)
+    .then(function(data){
+        return res.status(200).send({data})
+    })
+    .catch(next())
 }
 
 function createUser(req,res,next){
@@ -27,5 +39,5 @@ function createUser(req,res,next){
 }
 
 module.exports = {
-    createUser, getAll
+    createUser, getOne, getAll
 }

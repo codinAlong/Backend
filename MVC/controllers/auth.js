@@ -38,7 +38,7 @@ const login = (req,res,next) => {
  
  
  function getAuthStatus(req, res, next){
-     res.status(200).send({...req.claim})
+     res.status(200).send(req.claim)
  }
  
  //////////////////////////////////////////////////////////////////////////////
